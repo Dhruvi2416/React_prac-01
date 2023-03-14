@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
@@ -25,9 +26,15 @@ module.exports = {
     filename: "bundle.js",
   },
   devServer: {
-  static: { directory: path.join(__dirname, "public/") },
+    static: { directory: path.join(__dirname, "public/") },
     port: 3000, // publicPath      devMiddleware:{         publicPath: "https://localhost:3000/dist/",      },has context menuComposeParagraph
- 
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HTMLWebpackPlugin({
+      filename: "index.html",
+      inject: true,
+      template: path.resolve(__dirname, "src", "index.html"),
+    }),
+  ],
 };
